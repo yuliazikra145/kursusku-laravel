@@ -2,30 +2,27 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Models\Course;
+use App\Http\Controllers\CourseController;
 
-// 1. Route Home (Menampilkan Beranda & Katalog)
+// =====================================================================
+// ROUTE UNTUK HALAMAN BERANDA & PENDAFTARAN (Pertemuan 9)
+// =====================================================================
+
+// 1. Route Home (Menampilkan Beranda & Katalog dari Database)
 Route::get('/', function () {
-    $courses = [
-        1 => ['id' => 1, 'name' => 'Web Dasar', 'desc' => 'Belajar struktur HTML, CSS, dan layout responsive.'],
-        2 => ['id' => 2, 'name' => 'PHP Dasar', 'desc' => 'Belajar logika, variabel, function, dan form processing.'],
-        3 => ['id' => 3, 'name' => 'Laravel Fundamental', 'desc' => 'Belajar Route, Controller, Blade, dan arsitektur MVC.'],
-    ];
+    $courses = Course::all(); 
     return view('home', compact('courses'));
 })->name('home');
 
 // 2. Route Tampil Form Pendaftaran
 Route::get('/pendaftaran', function () {
-    $courses = [
-        1 => ['name' => 'Web Dasar'],
-        2 => ['name' => 'PHP Dasar'],
-        3 => ['name' => 'Laravel Dasar'],
-    ];
+    $courses = Course::all(); 
     return view('enrollments.create', compact('courses'));
 })->name('enrollments.create');
 
-// 3. Route Proses Submit Form (Validasi)
+// 3. Route Proses Submit Form Pendaftaran
 Route::post('/pendaftaran/preview', function (Request $request) {
-    // Validasi semua input dari form
     $data = $request->validate([
         'name' => ['required', 'string', 'min:3', 'max:100'],
         'email' => ['required', 'email'],
@@ -34,11 +31,10 @@ Route::post('/pendaftaran/preview', function (Request $request) {
         'course_id' => ['required', 'integer'],
         'method' => ['required', 'string'],
         'participant_type' => ['required', 'string'],
-        'interests' => ['nullable', 'array'], // Tambahan untuk checkbox
-        'notes' => ['nullable', 'string'],    // Tambahan untuk textarea
+        'interests' => ['nullable', 'array'],
+        'notes' => ['nullable', 'string'],
     ]);
 
-    // Kembalikan ke halaman form dengan pesan sukses
     return back()
         ->with('success', 'Pendaftaran berhasil! Data Anda sudah kami terima.')
         ->withInput();
@@ -46,15 +42,18 @@ Route::post('/pendaftaran/preview', function (Request $request) {
 
 // 4. Route JSON Ketersediaan Kursi (Untuk Ajax)
 Route::get('/courses/{course}/availability', function (int $course) {
-    $availability = [
-        1 => ['course' => 'Web Dasar', 'remaining' => 12],
-        2 => ['course' => 'PHP Dasar', 'remaining' => 8],
-        3 => ['course' => 'Laravel Dasar', 'remaining' => 4],
-    ];
-
-    // Jika ID kursus tidak ada di array, tampilkan 404
-    abort_unless(isset($availability[$course]), 404);
-
-    // Kembalikan response dalam format JSON
-    return response()->json($availability[$course]);
+    $courseData = Course::findOrFail($course);
+    
+    return response()->json([
+        'course' => $courseData->name,
+        'remaining' => $courseData->quota 
+    ]);
 })->name('courses.availability');
+
+
+// =====================================================================
+// ROUTE UNTUK CRUD KURSUS (Pertemuan 10)
+// =====================================================================
+
+// Route Resource untuk CRUD Course
+Route::resource('courses', CourseController::class);

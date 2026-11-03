@@ -5,7 +5,7 @@
 @section('content')
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6"> <!-- Kunci agar form rapi di tengah -->
+        <div class="col-md-8 col-lg-6">
             
             <div class="card shadow-sm border-0 rounded-4">
                 <div class="card-body p-4 p-md-5">
@@ -26,36 +26,36 @@
 
                         <!-- Nama Lengkap -->
                         <div class="mb-3">
-                            <label class="form-label fw-semibold text-secondary" style="font-size: 14px;">Nama Lengkap *</label>
-                            <input type="text" name="name" value="{{ old('name') }}" class="form-control bg-light @error('name') is-invalid @enderror" placeholder="Masukkan nama lengkap Anda" required>
+                            <label for="name" class="form-label fw-semibold text-secondary" style="font-size: 14px;">Nama Lengkap *</label>
+                            <input type="text" id="name" name="name" value="{{ old('name') }}" class="form-control bg-light @error('name') is-invalid @enderror" placeholder="Masukkan nama lengkap Anda" required>
                             @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
                         <!-- Email -->
                         <div class="mb-3">
-                            <label class="form-label fw-semibold text-secondary" style="font-size: 14px;">Email *</label>
-                            <input type="email" name="email" value="{{ old('email') }}" class="form-control bg-light @error('email') is-invalid @enderror" placeholder="contoh@email.com" required>
+                            <label for="email" class="form-label fw-semibold text-secondary" style="font-size: 14px;">Email *</label>
+                            <input type="email" id="email" name="email" value="{{ old('email') }}" class="form-control bg-light @error('email') is-invalid @enderror" placeholder="contoh@email.com" required>
                             @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
                         <!-- Nomor HP -->
                         <div class="mb-3">
-                            <label class="form-label fw-semibold text-secondary" style="font-size: 14px;">Nomor HP *</label>
-                            <input type="text" name="phone" value="{{ old('phone') }}" class="form-control bg-light @error('phone') is-invalid @enderror" placeholder="Contoh: 081234567890" required>
+                            <label for="phone" class="form-label fw-semibold text-secondary" style="font-size: 14px;">Nomor HP *</label>
+                            <input type="text" id="phone" name="phone" value="{{ old('phone') }}" class="form-control bg-light @error('phone') is-invalid @enderror" placeholder="Contoh: 081234567890" required>
                             @error('phone') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
                         <!-- Program Studi -->
                         <div class="mb-3">
-                            <label class="form-label fw-semibold text-secondary" style="font-size: 14px;">Program Studi *</label>
-                            <input type="text" name="prodi" value="{{ old('prodi') }}" class="form-control bg-light @error('prodi') is-invalid @enderror" placeholder="Masukkan program studi Anda" required>
+                            <label for="prodi" class="form-label fw-semibold text-secondary" style="font-size: 14px;">Program Studi *</label>
+                            <input type="text" id="prodi" name="prodi" value="{{ old('prodi') }}" class="form-control bg-light @error('prodi') is-invalid @enderror" placeholder="Masukkan program studi Anda" required>
                             @error('prodi') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
                         <!-- Pilih Kursus -->
                         <div class="mb-3">
-                            <label class="form-label fw-semibold text-secondary" style="font-size: 14px;">Pilih Kursus *</label>
-                            <select name="course_id" id="course_id" class="form-select bg-light @error('course_id') is-invalid @enderror" required>
+                            <label for="course_id" class="form-label fw-semibold text-secondary" style="font-size: 14px;">Pilih Kursus *</label>
+                            <select id="course_id" name="course_id" class="form-select bg-light @error('course_id') is-invalid @enderror" required>
                                 <option value="">-- Pilih Kursus --</option>
                                 @foreach ($courses as $id => $course)
                                     <option value="{{ $id }}" @selected(old('course_id') == $id)>{{ $course['name'] }}</option>
@@ -71,8 +71,8 @@
 
                         <!-- Metode Belajar -->
                         <div class="mb-3">
-                            <label class="form-label fw-semibold text-secondary" style="font-size: 14px;">Metode Belajar *</label>
-                            <select name="method" class="form-select bg-light @error('method') is-invalid @enderror" required>
+                            <label for="method" class="form-label fw-semibold text-secondary" style="font-size: 14px;">Metode Belajar *</label>
+                            <select id="method" name="method" class="form-select bg-light @error('method') is-invalid @enderror" required>
                                 <option value="">-- Pilih metode --</option>
                                 <option value="Online" @selected(old('method') == 'Online')>Online</option>
                                 <option value="Offline" @selected(old('method') == 'Offline')>Offline (Tatap Muka)</option>
@@ -85,44 +85,44 @@
                         <div class="mb-3">
                             <label class="form-label fw-semibold text-secondary d-block" style="font-size: 14px;">Jenis Peserta *</label>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="participant_type" value="Mahasiswa" @checked(old('participant_type') == 'Mahasiswa' || !old('participant_type')) required>
-                                <label class="form-check-label" style="font-size: 14px;">Mahasiswa</label>
+                                <input class="form-check-input" type="radio" name="participant_type" id="type_mhs" value="Mahasiswa" @checked(old('participant_type') == 'Mahasiswa' || !old('participant_type')) required>
+                                <label class="form-check-label" for="type_mhs" style="font-size: 14px;">Mahasiswa</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="participant_type" value="Umum" @checked(old('participant_type') == 'Umum')>
-                                <label class="form-check-label" style="font-size: 14px;">Umum</label>
+                                <input class="form-check-input" type="radio" name="participant_type" id="type_umum" value="Umum" @checked(old('participant_type') == 'Umum')>
+                                <label class="form-check-label" for="type_umum" style="font-size: 14px;">Umum</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="participant_type" value="Guru" @checked(old('participant_type') == 'Guru')>
-                                <label class="form-check-label" style="font-size: 14px;">Guru</label>
+                                <input class="form-check-input" type="radio" name="participant_type" id="type_guru" value="Guru" @checked(old('participant_type') == 'Guru')>
+                                <label class="form-check-label" for="type_guru" style="font-size: 14px;">Guru</label>
                             </div>
                         </div>
 
                         <!-- Minat Tambahan -->
                         <div class="mb-4">
-                            <label class="form-label fw-semibold text-secondary d-block" style="font-size: 14px;">Minat Tambahan *</label>
+                            <label class="form-label fw-semibold text-secondary d-block" style="font-size: 14px;">Minat Tambahan</label>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="interests[]" value="UI/UX">
-                                <label class="form-check-label" style="font-size: 14px;">UI/UX</label>
+                                <input class="form-check-input" type="checkbox" name="interests[]" id="int_uiux" value="UI/UX">
+                                <label class="form-check-label" for="int_uiux" style="font-size: 14px;">UI/UX</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="interests[]" value="Database">
-                                <label class="form-check-label" style="font-size: 14px;">Database</label>
+                                <input class="form-check-input" type="checkbox" name="interests[]" id="int_db" value="Database">
+                                <label class="form-check-label" for="int_db" style="font-size: 14px;">Database</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="interests[]" value="Backend">
-                                <label class="form-check-label" style="font-size: 14px;">Backend</label>
+                                <input class="form-check-input" type="checkbox" name="interests[]" id="int_be" value="Backend">
+                                <label class="form-check-label" for="int_be" style="font-size: 14px;">Backend</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" name="interests[]" value="Frontend">
-                                <label class="form-check-label" style="font-size: 14px;">Frontend</label>
+                                <input class="form-check-input" type="checkbox" name="interests[]" id="int_fe" value="Frontend">
+                                <label class="form-check-label" for="int_fe" style="font-size: 14px;">Frontend</label>
                             </div>
                         </div>
 
                         <!-- Catatan -->
                         <div class="mb-4">
-                            <label class="form-label fw-semibold text-secondary" style="font-size: 14px;">Catatan</label>
-                            <textarea name="notes" class="form-control bg-light" rows="3" placeholder="Tuliskan kebutuhan belajar Anda (opsional)">{{ old('notes') }}</textarea>
+                            <label for="notes" class="form-label fw-semibold text-secondary" style="font-size: 14px;">Catatan</label>
+                            <textarea id="notes" name="notes" class="form-control bg-light" rows="3" placeholder="Tuliskan kebutuhan belajar Anda (opsional)">{{ old('notes') }}</textarea>
                         </div>
 
                         <!-- Tombol Submit -->
