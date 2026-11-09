@@ -33,6 +33,7 @@
                             <th class="py-3">Kuota</th>
                             <th class="py-3">Mulai</th>
                             <th class="py-3">Status</th>
+                            <th class="py-3 text-center" style="min-width: 220px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,10 +53,21 @@
                                         <span class="badge bg-danger">Closed</span>
                                     @endif
                                 </td>
+                                <td class="text-center">
+                                    <div class="d-flex gap-1 justify-content-center">
+                                        <a href="{{ route('courses.show', $course) }}" class="btn btn-sm btn-outline-primary" title="Detail">Detail</a>
+                                        <a href="{{ route('courses.edit', $course) }}" class="btn btn-sm btn-outline-warning text-dark" title="Edit">Edit</a>
+                                        <form method="POST" action="{{ route('courses.destroy', $course) }}" onsubmit="return confirm('Hapus kursus ini?')" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus">Hapus</button>
+                                        </form>
+                                    </div>
+                                </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center py-5 text-muted">
+                                <td colspan="7" class="text-center py-5 text-muted">
                                     Belum ada data kursus. Silakan tambah data.
                                 </td>
                             </tr>

@@ -1,0 +1,18 @@
+==================================================
+LOG PENGGUNAAN AI (AI USAGE LOG) - PERTEMUAN 11
+==================================================
+
+Waktu: 09 November 2026
+Tujuan: Menyelesaikan CRUD Lanjutan (Show, Edit, Update, Delete) dan Form Request.
+
+| No | Prompt / Pertanyaan | Saran AI | Dipakai? | Alasan |
+|----|---------------------|----------|----------|--------|
+| 1 | "Buatkan file StoreCourseRequest dan UpdateCourseRequest untuk validasi Course." | Membuat file Request dengan aturan validasi, serta menambahkan Rule::unique()->ignore() pada update. | Ya | Sesuai dengan panduan praktikum untuk memisahkan validasi dari Controller. |
+| 2 | "Kenapa saat klik Edit muncul error Class UpdateCourseRequest not found?" | Meminta untuk membuat folder Requests (pakai 's') dan memastikan file berada di dalamnya. | Ya | Memperbaiki struktur folder yang salah. |
+| 3 | "Kenapa terminal tidak menampilkan output saat php artisan route:list?" | Menyarankan menggunakan trik route sementara /cek_route.php lewat browser. | Ya | Terminal Windows bug (silent crash), trik browser berhasil menampilkan 8 route. |
+| 4 | "Buatkan file edit.blade.php yang mempertahankan data lama jika validasi gagal." | Memberikan form edit dengan old('field', $course->field) dan @method('PUT'). | Ya | Form edit berhasil menampilkan data dan menyimpan perubahan. |
+| 5 | "Buatkan tombol Detail, Edit, Hapus di index.blade.php." | Menambahkan kolom Aksi dengan tombol dan form @method('DELETE'). | Ya | Fitur delete berjalan dengan pop-up konfirmasi. |
+
+==================================================
+Catatan: Semua kode yang disarankan AI telah diuji secara manual di browser dan berjalan sesuai harapan. AI digunakan sebagai tutor untuk membantu debugging, bukan untuk menyalin kode secara buta.
+==================================================

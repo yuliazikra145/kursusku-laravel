@@ -52,8 +52,9 @@ Route::get('/courses/{course}/availability', function (int $course) {
 
 
 // =====================================================================
-// ROUTE UNTUK CRUD KURSUS (Pertemuan 10)
+// ROUTE UNTUK CRUD KURSUS (Pertemuan 10 & 11)
 // =====================================================================
+// Route Resource otomatis membuat 7 route:
+// index, create, store, show, edit, update, destroy.
 
-// Route Resource untuk CRUD Course
 Route::resource('courses', CourseController::class);
