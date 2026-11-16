@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\EnrollmentController; // <-- Import Controller Baru
 
 // =====================================================================
 // ROUTE UNTUK HALAMAN BERANDA & PENDAFTARAN (Pertemuan 9)
@@ -16,12 +17,10 @@ Route::get('/', function () {
 })->name('home');
 
 // 2. Route Tampil Form Pendaftaran
-Route::get('/pendaftaran', function () {
-    $courses = Course::all(); 
-    return view('enrollments.create', compact('courses'));
-})->name('enrollments.create');
+// Catatan: Route ini kita hapus/ubah karena pendaftaran sekarang ditangani oleh EnrollmentController di bawah
+// Route::get('/pendaftaran', function () { ... })->name('enrollments.create');
 
-// 3. Route Proses Submit Form Pendaftaran
+// 3. Route Proses Submit Form Pendaftaran (Dummy dari Pertemuan 9)
 Route::post('/pendaftaran/preview', function (Request $request) {
     $data = $request->validate([
         'name' => ['required', 'string', 'min:3', 'max:100'],
@@ -40,7 +39,7 @@ Route::post('/pendaftaran/preview', function (Request $request) {
         ->withInput();
 })->name('enrollments.preview');
 
-// 4. Route JSON Ketersediaan Kursi (Untuk Ajax)
+// 4. Route JSON Ketersediaan Kursi (Untuk Ajax Pertemuan 9)
 Route::get('/courses/{course}/availability', function (int $course) {
     $courseData = Course::findOrFail($course);
     
@@ -54,7 +53,11 @@ Route::get('/courses/{course}/availability', function (int $course) {
 // =====================================================================
 // ROUTE UNTUK CRUD KURSUS (Pertemuan 10 & 11)
 // =====================================================================
-// Route Resource otomatis membuat 7 route:
-// index, create, store, show, edit, update, destroy.
-
 Route::resource('courses', CourseController::class);
+
+
+// =====================================================================
+// ROUTE UNTUK RELASI PENDAFTARAN (Pertemuan 12)
+// =====================================================================
+// Route ini akan menangani laporan, form pendaftaran baru, dan proses simpan.
+Route::resource('enrollments', EnrollmentController::class)->only(['index', 'create', 'store']);

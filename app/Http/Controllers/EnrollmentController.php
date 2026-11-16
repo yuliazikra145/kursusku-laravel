@@ -5,36 +5,28 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\Enrollment;
 use App\Models\Participant;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Illuminate\View\View;
 
 class EnrollmentController extends Controller
 {
-    public function index(): View
+    // 1. Menampilkan Laporan Relasional
+    public function index()
     {
-        $enrollments = Enrollment::with(['participant', 'course'])
-            ->latest()
-            ->get();
-
+        $enrollments = Enrollment::with(['participant', 'course'])->latest()->get();
         return view('enrollments.index', compact('enrollments'));
     }
 
-    public function create(): View
+    // 2. Menampilkan Form Pendaftaran
+    public function create()
     {
         $participants = Participant::orderBy('name')->get();
-
-        // The Course schema from meetings 10, 11 and 13 uses draft/open/closed.
-        // Therefore the final integrated project uses open here rather than active.
-        $courses = Course::where('status', 'open')
-            ->orderBy('name')
-            ->get();
-
+        $courses = Course::where('status', 'open')->orderBy('name')->get();
         return view('enrollments.create', compact('participants', 'courses'));
     }
 
-    public function store(Request $request): RedirectResponse
+    // 3. Menyimpan Data Pendaftaran
+    public function store(Request $request)
     {
         $data = $request->validate([
             'participant_id' => ['required', 'exists:participants,id'],
@@ -42,12 +34,11 @@ class EnrollmentController extends Controller
                 'required',
                 'exists:courses,id',
                 Rule::unique('enrollments')->where(
-                    fn ($query) => $query->where(
-                        'participant_id',
-                        $request->participant_id
-                    )
+                    fn($query) => $query->where('participant_id', $request->participant_id)
                 ),
             ],
+        ], [
+            'course_id.unique' => 'Participant ini sudah terdaftar pada course tersebut.',
         ]);
 
         $data['status'] = 'registered';
