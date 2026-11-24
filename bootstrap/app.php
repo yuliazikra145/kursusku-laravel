@@ -10,10 +10,9 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware): void {
-        // Laravel's standard web middleware group handles sessions and CSRF.
+    ->withMiddleware(function (Middleware $middleware) {
+        //
     })
-    ->withExceptions(function (Exceptions $exceptions): void {
-        // Keep framework defaults for this teaching project.
-    })
-    ->create();
+    ->withExceptions(function (Exceptions $exceptions) {
+        //
+    })->create();
